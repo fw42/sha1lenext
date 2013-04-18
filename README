@@ -1,0 +1,19 @@
+Length-extension attack on SHA1
+===============================
+
+vuln.rb implementes an example web application which uses SHA1(secret + message)
+as message authentication which is vulnerable to a length-extesion attack. Also,
+the message is a comma-separated list of key-value pairs with a stupid parser
+which allows you to overwrite previous keys by specifying values for them again,
+therefore introducing a security vulnerability when you are able to append
+stuff to the input (and generate valid tokens).
+
+* Run vuln.rb
+* Go to http://localhost:3000/
+* Get guest token
+* Base64.urlsafe_decode64(user) to see what's in there
+
+* Run ./sha1 <keylen> <decoded user data> <auth token> ",admin=true"
+* Encode new message in base64 again
+* Request page
+* Repeat with keylen++ if authentication failed
